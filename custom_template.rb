@@ -107,20 +107,6 @@ git add: ".", commit: "-m 'initial commit'"
     end
 # ./IF POSTGRES INSTALLED
 
-# IF SIMPLE_FORM INSTALLED
-    if (@simple_form_installed == true)
-        generate "simple_form:install"
-        if (@locale_ayarla == true)
-            path = "config/locales/simple_form.#{@locale}.yml"
-            content = "#{@locale}:
-            simple_form:"
-            File.open(path, "w+") do |f|
-            f.write(content)
-            end
-        end
-    end
-# ./IF SIMPLE_FORM INSTALLED
-
 # IF FONT AWESOME INSTALLED
     if (@font_awesome_installed)
         inject_into_file 'app/assets/stylesheets/application.css', before: " *= require_tree .\n" do <<-'RUBY'
@@ -129,8 +115,6 @@ git add: ".", commit: "-m 'initial commit'"
         end
     end
 # ./IF FONT AWESOME INSTALLED
-
-
 
 # SCSS WORKFLOW START
 
@@ -177,8 +161,6 @@ git add: ".", commit: "-m 'initial commit'"
     end
 
 # SCSS WORKFLOW END
-
-
 
 # SET TIMEZONE START
     if yes?('Timezone ayarla?')
@@ -278,6 +260,20 @@ git add: ".", commit: "-m 'initial commit'"
     end
 # SCAFFOLD TEMPLATES END
 
+# IF SIMPLE_FORM INSTALLED
+    if (@simple_form_installed == true)
+        generate "simple_form:install"
+        if (@locale_ayarla == true)
+            path = "config/locales/simple_form.#{@locale}.yml"
+            content = "#{@locale}:
+            simple_form:"
+            File.open(path, "w+") do |f|
+            f.write(content)
+            end
+        end
+    end
+# ./IF SIMPLE_FORM INSTALLED
+
 # CREATE SCAFFOLDS START
     until @iskelet_loop == false
         if yes?('Yeni iskelet yaratmak ister misiniz?')
@@ -302,16 +298,16 @@ git add: ".", commit: "-m 'initial commit'"
 
 
 # CREATE ROOT
-if yes?("Root ayarlamak ister misiniz?")
-    route =ask("Root to?").underscore
-    route "root to: '#{route}\#index'"
-end
+    if yes?("Root ayarlamak ister misiniz?")
+        route =ask("Root to?").underscore
+        route "root to: '#{route}\#index'"
+    end
 
 
-if yes?('Database olustur?')
-    rake "db:create"
-end
+    if yes?('Database olustur?')
+        rake "db:create"
+    end
 
-if yes?('Database migration?')
-    rake "db:migrate"
-end
+    if yes?('Database migration?')
+        rake "db:migrate"
+    end
