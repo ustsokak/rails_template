@@ -276,7 +276,7 @@ git add: ".", commit: "-m 'initial commit'"
 
 # CREATE SCAFFOLDS START
     until @iskelet_loop == false
-        if yes?('Yeni iskelet yaratmak ister misiniz?')
+        if yes?('Yeni iskelet yaratmak ister misiniz? ( Post title:string content:text adet:integer price:decimal )')
             scaffold_attr =ask('Iskelet ozellikleri').underscore
             generate "scaffold #{scaffold_attr}"
         else
