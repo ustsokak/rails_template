@@ -296,6 +296,16 @@ git add: ".", commit: "-m 'initial commit'"
     end
 # CREATE MODEL END
 
+# CREATE CONTROLLER START
+    until @controller_loop == false
+        if yes?('Yeni controller yaratmak ister misiniz? ( anasayfa index show )')
+            controller_attr =ask('Controller ozellikleri').underscore
+            generate "controller #{controller_attr}"
+        else
+            @controller_loop = false
+        end
+    end
+# CREATE CONTROLLER END
 
 # CREATE ROOT
     if yes?("Root ayarlamak ister misiniz?")
